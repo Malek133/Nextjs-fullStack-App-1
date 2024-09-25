@@ -22,15 +22,7 @@ model User {
   id      String   @id @default(auto()) @map("_id") @db.ObjectId
   email   String   @unique
   name    String?
-  address Address?
   posts   Post[]
 }
 
 
-// Address is an embedded document
-type Address {
-  street String
-  city   String
-  state  String
-  zip    String
-}
