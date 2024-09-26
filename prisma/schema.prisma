@@ -7,22 +7,14 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Post {
+model Product {
   id       String    @id @default(auto()) @map("_id") @db.ObjectId
-  slug     String    @unique
   title    String
-  body     String
+  body     String?
   image    String?
-  author   User      @relation(fields: [authorId], references: [id])
-  authorId String    @db.ObjectId
- 
-}
-
-model User {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  email   String   @unique
-  name    String?
-  posts   Post[]
+  price    Float?
+  completed   Boolean  @default(false)
+  createdAd DateTime  @default(now())
 }
 
 

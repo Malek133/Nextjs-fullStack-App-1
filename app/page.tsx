@@ -1,26 +1,28 @@
 import { Button } from "@/components/ui/button";
 import { FolderPlus } from 'lucide-react';
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
+  Dialog,DialogContent,DialogDescription,
+  DialogFooter,DialogHeader,DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { getProductActions } from "@/actions/todoActions";
 
 
-export default function Home() {
+export default async function  Home() {
+  const products = await getProductActions()
   return (
-    <div 
+   <main>
+
+   
+    
+     <div 
      className="flex justify-between items-center p-8 pb-4 gap-6 sm:p-20 font-[family-name:var(--font-geist-sans)]"
-    >
-       Alphazero
+    > 
       
-       <Dialog>
+      
+        <Dialog>
       <DialogTrigger asChild>
          <Button><FolderPlus className="mx-2" /> New Todo</Button>
       </DialogTrigger>
@@ -50,6 +52,18 @@ export default function Home() {
         </DialogFooter>
       </DialogContent>
     </Dialog>
-    </div>
+
+   
+
+    </div> 
+     <div className="grid grid-cols-8 gap-4 mx-5">
+      {products && products.map(product => (
+       <li key={product.id}>
+      {product.title}
+       </li>
+       ))}
+      </div>
+    </main>
+   
   );
 }
