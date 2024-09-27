@@ -11,11 +11,13 @@ export const getProductActions = async () =>{
 
 
 export const createProductActions = async (
-{title,body}:{title:string,body?:string | undefined}) =>{
+{title,body,completed}:{title:string,
+ body?:string | undefined,completed:boolean}) =>{
     return await prisma.product.create({
         data:{
             title,
-            body
+            body,
+            completed
         }
     })
 }

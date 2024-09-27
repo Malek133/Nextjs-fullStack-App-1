@@ -21,8 +21,9 @@ import {
 
   import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { productFormSchema, ProductFormValues } from "@/schema/inex";
+import { productFormSchema, ProductFormValues } from "@/schema";
 import { createProductActions } from "@/actions/todoActions";
+import { Checkbox } from "./checkbox";
 
 
 
@@ -30,8 +31,9 @@ const AddProductForm = () => {
 
         // This can come from your database or API.
 const defaultValues: Partial<ProductFormValues> = {
-    title:"DEFAULT TITLE",
-    body: "DEFAULT BODY",
+    title:"",
+    body: "",
+    completed:false
   }
   
 
@@ -44,7 +46,8 @@ const defaultValues: Partial<ProductFormValues> = {
     const onSubmit = async (data:ProductFormValues) =>{
         console.log(data)
         await createProductActions(
-            {title:data.title,body:data.body})
+            {title:data.title,body:data.body,
+                completed:data.completed})
     }
 
   return (
@@ -99,6 +102,22 @@ const defaultValues: Partial<ProductFormValues> = {
                 You can <span>@mention</span> other users and organizations to
                 link to them.
               </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+           <FormField
+          control={form.control}
+          name="completed"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Completed</FormLabel>
+              <FormControl>
+              <Checkbox checked={field.value}
+              onCheckedChange={field.onChange} id="terms" {...field } />
+              </FormControl>
+             
               <FormMessage />
             </FormItem>
           )}

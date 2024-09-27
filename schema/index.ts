@@ -15,6 +15,8 @@ export const productFormSchema = z.object({
     .max(100, {
       message: "Username must not be longer than 30 characters.",
     }).optional(),
+
+    completed:z.boolean()
   })
   
  export type ProductFormValues = z.infer<typeof productFormSchema>
