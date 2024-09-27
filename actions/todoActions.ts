@@ -10,6 +10,17 @@ export const getProductActions = async () =>{
 }
 
 
-export const createProductActions = async () =>{}
+export const createProductActions = async (
+{title,body}:{title:string,body?:string | undefined}) =>{
+    return await prisma.product.create({
+        data:{
+            title,
+            body
+        }
+    })
+}
+
+
+
 export const updateProductActions = async () =>{}
 export const deleteProductActions = async () =>{}
