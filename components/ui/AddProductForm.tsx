@@ -24,15 +24,20 @@ import { useForm } from "react-hook-form"
 import { productFormSchema, ProductFormValues } from "@/schema";
 import { createProductActions } from "@/actions/todoActions";
 import { Checkbox } from "./checkbox";
+import { useState } from "react";
+import Spinner from "./Spinner";
 
 
 
 const AddProductForm = () => {
 
+  const [loading,setLoading]= useState(false)
+
         // This can come from your database or API.
 const defaultValues: Partial<ProductFormValues> = {
     title:"",
     body: "",
+      //  price:0,
     completed:false
   }
   
@@ -44,10 +49,12 @@ const defaultValues: Partial<ProductFormValues> = {
       })
 
     const onSubmit = async (data:ProductFormValues) =>{
-        console.log(data)
+      setLoading(true)
         await createProductActions(
             {title:data.title,body:data.body,
+              //  price:data.price,
                 completed:data.completed})
+                setLoading(false)
     }
 
   return (
@@ -84,6 +91,23 @@ const defaultValues: Partial<ProductFormValues> = {
             </FormItem>
           )}
         />
+
+           {/* <FormField
+          control={form.control}
+          name="price"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Price</FormLabel>
+              <FormControl>
+                <Input type="number" {...field} />
+              </FormControl>
+              
+              <FormMessage />
+            </FormItem>
+          )}
+        /> */}
+
+        
       
         <FormField
           control={form.control}
@@ -124,8 +148,11 @@ const defaultValues: Partial<ProductFormValues> = {
         />
        
       <DialogFooter>
-          <Button type="submit">Save</Button>
+          <Button type="submit">
+            {loading ? <Spinner /> : 'Save'}
+            </Button>
         </DialogFooter>
+
       </form>
     </Form>
          
