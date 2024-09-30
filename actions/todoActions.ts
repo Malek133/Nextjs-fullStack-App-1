@@ -50,7 +50,11 @@ import { revalidatePath } from 'next/cache';
 const prisma = new PrismaClient();
 
 export const getProductActions = async () => {
-    return await prisma.product.findMany();
+    return await prisma.product.findMany({
+        orderBy:{
+            createdAd:"desc"
+        }
+    });
 }
 
 export const createProductActions = async (

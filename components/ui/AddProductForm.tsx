@@ -31,7 +31,8 @@ import Spinner from "./Spinner";
 
 const AddProductForm = () => {
 
-  const [loading,setLoading]= useState(false)
+  const [loading,setLoading]= useState(false);
+  const [open,setOpen]= useState(false)
 
         // This can come from your database or API.
 const defaultValues: Partial<ProductFormValues> = {
@@ -48,18 +49,17 @@ const defaultValues: Partial<ProductFormValues> = {
         mode: "onChange",
       })
 
-    const onSubmit = async (data:ProductFormValues) =>{
-      setLoading(true)
+    const onSubmit = async ({title,body,completed}:ProductFormValues) =>{
+               setLoading(true)
         await createProductActions(
-            {title:data.title,body:data.body,
-              //  price:data.price,
-                completed:data.completed})
+            {title,body,completed})
                 setLoading(false)
+                setOpen(false)
     }
 
   return (
     <div>
-      <Dialog>
+      <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
          <Button><FolderPlus className="mx-2" /> New Todo</Button>
       </DialogTrigger>
@@ -131,7 +131,7 @@ const defaultValues: Partial<ProductFormValues> = {
           )}
         />
 
-           <FormField
+           {/* <FormField
           control={form.control}
           name="completed"
           render={({ field }) => (
@@ -145,7 +145,26 @@ const defaultValues: Partial<ProductFormValues> = {
               <FormMessage />
             </FormItem>
           )}
+        /> */}
+
+<FormField
+  control={form.control}
+  name="completed"
+  render={({ field }) => (
+    <FormItem>
+      <FormLabel>Completed</FormLabel>
+      <FormControl>
+        <Checkbox
+          checked={field.value} // `checked` utilise le booléen de `field.value`
+          onCheckedChange={field.onChange} // `onCheckedChange` gère le changement
+          id="terms"
         />
+      </FormControl>
+      <FormMessage />
+    </FormItem>
+  )}
+/>
+
        
       <DialogFooter>
           <Button type="submit">
