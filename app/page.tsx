@@ -1,5 +1,5 @@
 
- import { getProductActions } from "@/actions/todoActions";
+ import { getProductActions } from "@/actions/productActions";
 
 import AddProductForm from "@/components/ui/AddProductForm";
 import TableProduct from "./components/TableProduct";

@@ -1,7 +1,6 @@
 'use client'
 
-import { Button } from "@/components/ui/button";
-import { FolderPlus } from 'lucide-react';
+import { Button } from "@/components/ui/button"
 import {
   Dialog,DialogContent,DialogDescription,
   DialogFooter,DialogHeader,DialogTitle,
@@ -22,24 +21,26 @@ import {
   import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { productFormSchema, ProductFormValues } from "@/schema";
-import { createProductActions } from "@/actions/productActions";
-import { Checkbox } from "./checkbox";
+import { Pencil } from 'lucide-react';
 import { useState } from "react";
-import Spinner from "./Spinner";
+import { Checkbox } from "@radix-ui/react-checkbox";
+import Spinner from "@/components/ui/Spinner";
+import { IProduct } from "@/interface";
+import { updateProductActions } from "@/actions/productActions";
 
 
 
-const AddProductForm = () => {
+
+const EditProductForm = ({product}:{product:IProduct}) => {
 
   const [loading,setLoading]= useState(false);
   const [open,setOpen]= useState(false)
 
         // This can come from your database or API.
 const defaultValues: Partial<ProductFormValues> = {
-    title:"",
-    body: "",
-      //  price:0,
-    completed:false
+    title:product.title,
+    body:product.body as string,
+    completed:product.completed
   }
   
 
@@ -49,23 +50,35 @@ const defaultValues: Partial<ProductFormValues> = {
         mode: "onChange",
       })
 
-    const onSubmit = async ({title,body,completed}:ProductFormValues) =>{
-               setLoading(true)
-        await createProductActions(
-            {title,body,completed})
-                setLoading(false)
-                setOpen(false)
-    }
+      const onSubmit = async (data: ProductFormValues) => {
+        setLoading(true);
+    
+        await updateProductActions({
+            id: product.id as string, // Assurez-vous que product.id est bien une chaîne
+            title: data.title,
+            body: data.body as string,
+            completed: data.completed,
+            image: product.image, // Ajoutez les propriétés manquantes
+            price: product.price,  // Ajoutez les propriétés manquantes
+        });
+    
+        setLoading(false);
+        setOpen(false);
+    };
+    
 
   return (
     <div>
       <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-         <Button><FolderPlus className="mx-2" /> New Todo</Button>
+         <Button className="bg-green-600 text-white 
+              hover:text-black hover:bg-slate-50">
+               <Pencil size={16} />
+         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add new Todo</DialogTitle>
+          <DialogTitle>Update a Product</DialogTitle>
           <DialogDescription>
             Make changes to your profile here. Click save when your done.
           </DialogDescription>
@@ -92,23 +105,6 @@ const defaultValues: Partial<ProductFormValues> = {
           )}
         />
 
-           {/* <FormField
-          control={form.control}
-          name="price"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Price</FormLabel>
-              <FormControl>
-                <Input type="number" {...field} />
-              </FormControl>
-              
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
-
-        
-      
         <FormField
           control={form.control}
           name="body"
@@ -131,22 +127,6 @@ const defaultValues: Partial<ProductFormValues> = {
           )}
         />
 
-           {/* <FormField
-          control={form.control}
-          name="completed"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Completed</FormLabel>
-              <FormControl>
-              <Checkbox checked={field.value}
-              onCheckedChange={field.onChange} id="terms" {...field } />
-              </FormControl>
-             
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
-
 <FormField
   control={form.control}
   name="completed"
@@ -168,7 +148,7 @@ const defaultValues: Partial<ProductFormValues> = {
        
       <DialogFooter>
           <Button type="submit">
-            {loading ? <Spinner /> : 'Save'}
+            {loading ? <Spinner /> : 'Editing'}
             </Button>
         </DialogFooter>
 
@@ -184,4 +164,4 @@ const defaultValues: Partial<ProductFormValues> = {
   )
 }
 
-export default AddProductForm
+export default EditProductForm

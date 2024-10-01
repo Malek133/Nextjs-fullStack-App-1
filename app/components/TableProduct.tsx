@@ -1,5 +1,5 @@
 
-import { Button } from "@/components/ui/button"
+
 import {
     Table,
     TableBody,
@@ -11,7 +11,7 @@ import {
     TableRow,
   } from "@/components/ui/table"
 import { IProduct } from "@/interface";
-import { Eye } from 'lucide-react';
+// import { Eye } from 'lucide-react';
 import ProductActions from "./ProductActions";
 
   interface TableProductProps {
@@ -42,8 +42,8 @@ import ProductActions from "./ProductActions";
               <TableCell>{product.price}</TableCell>
               <TableCell>{product.completed ? "true" : "false"}</TableCell>
               <TableCell className=" flex-col justify-center items-center space-x-4">
-              <ProductActions id={product.id} />
-              <Button  ><Eye size={16} /></Button>
+              <ProductActions product={product} />
+              {/* <Button  ><Eye size={16} /></Button> */}
                 </TableCell>
             </TableRow>
           ))}

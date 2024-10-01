@@ -44,6 +44,7 @@
 
 'use server'
 
+import { IProduct } from "@/interface";
 import { PrismaClient } from "@prisma/client";
 import { revalidatePath } from 'next/cache';
 
@@ -88,4 +89,17 @@ export const deleteProductActions = async ({ id }: { id: string }) => {
 
 
 
-export const updateProductActions = async () =>{}
+export const updateProductActions = async (
+    {title,body,completed,id}:IProduct) =>{
+    await prisma.product.update({
+        where:{
+            id: id as string,
+        },
+        data:{
+            title,
+            body,
+            completed
+        }
+    })
+    revalidatePath('/');
+}
