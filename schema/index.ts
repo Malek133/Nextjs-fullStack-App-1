@@ -18,7 +18,6 @@ export const productFormSchema = z.object({
 
     completed:z.boolean(),
 
-    //  price: z.number().optional(),
   })
   
  export type ProductFormValues = z.infer<typeof productFormSchema>

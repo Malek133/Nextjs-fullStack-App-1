@@ -14,6 +14,7 @@ model Product {
   image    String?
   price    Float?
   completed   Boolean  @default(false)
+  user_id String
   createdAd DateTime  @default(now())
 }
 

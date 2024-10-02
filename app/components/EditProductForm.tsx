@@ -23,7 +23,7 @@ import { useForm } from "react-hook-form"
 import { productFormSchema, ProductFormValues } from "@/schema";
 import { Pencil } from 'lucide-react';
 import { useState } from "react";
-import { Checkbox } from "@radix-ui/react-checkbox";
+ import { Checkbox } from "@radix-ui/react-checkbox";
 import Spinner from "@/components/ui/Spinner";
 import { IProduct } from "@/interface";
 import { updateProductActions } from "@/actions/productActions";
@@ -126,24 +126,24 @@ const defaultValues: Partial<ProductFormValues> = {
             </FormItem>
           )}
         />
-
-<FormField
+        
+        <FormField
   control={form.control}
   name="completed"
   render={({ field }) => (
-    <FormItem>
-      <FormLabel>Completed</FormLabel>
+    <FormItem className='flex justify-start items-center space-x-3'>
+      
       <FormControl>
         <Checkbox
-          checked={field.value} // `checked` utilise le booléen de `field.value`
-          onCheckedChange={field.onChange} // `onCheckedChange` gère le changement
-          id="terms"
+          {...field} checked={field.value} onCheckedChange={field.onChange}
+           value={field.value ? "true" : "false"}
         />
       </FormControl>
-      <FormMessage />
+      <FormLabel>Completed</FormLabel>
     </FormItem>
   )}
 />
+
 
        
       <DialogFooter>
