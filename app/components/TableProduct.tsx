@@ -29,7 +29,7 @@ import ProductActions from "./ProductActions";
           <TableRow> 
             <TableHead >ID</TableHead>
             <TableHead>Title</TableHead>
-            <TableHead>Price</TableHead>
+            {/* <TableHead>Price</TableHead> */}
             <TableHead>Completed</TableHead>
             <TableHead className="">Actions</TableHead>
           </TableRow>
@@ -39,7 +39,7 @@ import ProductActions from "./ProductActions";
             <TableRow key={product.id}>
               <TableCell className="font-medium">{product.id}</TableCell>
               <TableCell>{product.title}</TableCell>
-              <TableCell>{product.price}</TableCell>
+              {/* <TableCell>{product.price}</TableCell> */}
               <TableCell>{product.completed ? "true" : "false"}</TableCell>
               <TableCell className=" flex-col justify-center items-center space-x-4">
               <ProductActions product={product} />

@@ -54,6 +54,7 @@ const defaultValues: Partial<ProductFormValues> = {
         await createProductActions(
             {title,body,completed,userId})
                 setLoading(false)
+                form.reset();  // Réinitialiser le formulaire
                 setOpen(false)
     }
 
@@ -92,23 +93,6 @@ const defaultValues: Partial<ProductFormValues> = {
           )}
         />
 
-           {/* <FormField
-          control={form.control}
-          name="price"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Price</FormLabel>
-              <FormControl>
-                <Input type="number" {...field} />
-              </FormControl>
-              
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
-
-        
-      
         <FormField
           control={form.control}
           name="body"
@@ -131,22 +115,6 @@ const defaultValues: Partial<ProductFormValues> = {
           )}
         />
 
-           {/* <FormField
-          control={form.control}
-          name="completed"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Completed</FormLabel>
-              <FormControl>
-              <Checkbox checked={field.value}
-              onCheckedChange={field.onChange} id="terms" {...field } />
-              </FormControl>
-             
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
-
 <FormField
   control={form.control}
   name="completed"
@@ -154,11 +122,13 @@ const defaultValues: Partial<ProductFormValues> = {
     <FormItem>
       <FormLabel>Completed</FormLabel>
       <FormControl>
-        <Checkbox
-          checked={field.value} // `checked` utilise le booléen de `field.value`
-          onCheckedChange={field.onChange} // `onCheckedChange` gère le changement
-          id="terms"
-        />
+     
+      <Checkbox
+          checked={field.value} // Utilisez `checked` au lieu de `value`
+          onCheckedChange={(checked) => field.onChange(checked)} // Mettez à jour `onChange` correctement
+        /> 
+
+           
       </FormControl>
       <FormMessage />
     </FormItem>

@@ -17,22 +17,18 @@ import {
     FormMessage,
   } from "@/components/ui/form"
   import { Textarea } from "@/components/ui/textarea";
-
   import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { productFormSchema, ProductFormValues } from "@/schema";
 import { Pencil } from 'lucide-react';
 import { useState } from "react";
- import { Checkbox } from "@radix-ui/react-checkbox";
 import Spinner from "@/components/ui/Spinner";
 import { IProduct } from "@/interface";
 import { updateProductActions } from "@/actions/productActions";
 
-
-
-
 const EditProductForm = ({product}:{product:IProduct}) => {
 
+  console.log("Valeur de product.completed:", product.completed);
   const [loading,setLoading]= useState(false);
   const [open,setOpen]= useState(false)
 
@@ -42,6 +38,7 @@ const defaultValues: Partial<ProductFormValues> = {
     body:product.body as string,
     completed:product.completed
   }
+
   
 
     const form = useForm<ProductFormValues>({
@@ -54,12 +51,10 @@ const defaultValues: Partial<ProductFormValues> = {
         setLoading(true);
     
         await updateProductActions({
-            id: product.id as string, // Assurez-vous que product.id est bien une chaîne
+            id: product.id, // Assurez-vous que product.id est bien une chaîne
             title: data.title,
             body: data.body as string,
             completed: data.completed,
-            image: product.image, // Ajoutez les propriétés manquantes
-            price: product.price,  // Ajoutez les propriétés manquantes
         });
     
         setLoading(false);
@@ -68,76 +63,92 @@ const defaultValues: Partial<ProductFormValues> = {
     
 
   return (
-    <div>
-      <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-         <Button className="bg-green-600 text-white 
-              hover:text-black hover:bg-slate-50">
-               <Pencil size={16} />
-         </Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Update a Product</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile here. Click save when your done.
-          </DialogDescription>
-        </DialogHeader>
-        <div className=" py-4">
-           
-        <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
-              <FormControl>
-                <Input placeholder="shadcn" {...field} />
-              </FormControl>
-              <FormDescription>
-                This is your public display name. It can be your real name or a
-                pseudonym. You can only change this once every 30 days.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
 
-        <FormField
-          control={form.control}
-          name="body"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Bio</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Tell us a little bit about yourself"
-                  className="resize-none"
-                  {...field}
-                />
-              </FormControl>
-              <FormDescription>
-                You can <span>@mention</span> other users and organizations to
-                link to them.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        
-        <FormField
+     <div>
+     <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger asChild>
+
+    <Button className="bg-green-600 text-white 
+   hover:text-black hover:bg-slate-50">
+<Pencil size={16}/>
+      </Button>
+
+</DialogTrigger>
+<DialogContent className="sm:max-w-[425px]">
+<DialogHeader>
+<DialogTitle>Edit This Todo</DialogTitle>
+<DialogDescription>
+  Make changes to your profile here. 
+  Click save when you re done.
+</DialogDescription>
+</DialogHeader>
+<div className=" py-4">
+
+<Form  {...form}> 
+<form 
+onSubmit={form.handleSubmit(onSubmit)} 
+className="space-y-8">
+<FormField
+ control={form.control}
+name="title"
+render={({ field }) => (
+  <FormItem>
+    <FormLabel>Title</FormLabel>
+    <FormControl>
+      <Input placeholder="shadcn" {...field} />
+    </FormControl>
+    <FormDescription>
+      This is your public display name. It can be your 
+      real name or a pseudonym. You can only change 
+      this once every 30 days.
+    </FormDescription>
+    <FormMessage />
+  </FormItem>
+)}
+/>
+
+  <FormField
+ control={form.control}
+name="body"
+render={({ field }) => (
+  <FormItem>
+    <FormLabel>Short Descreption</FormLabel>
+    <FormControl>
+      <Textarea
+        placeholder="Tell us a little bit about yourself"
+        className="resize-none"
+        {...field}
+      />
+    </FormControl>
+    <FormDescription>
+      You can <span>@mention</span>
+       other users and organizations to
+      link to them.
+    </FormDescription>
+    <FormMessage />
+  </FormItem>
+)}
+/>
+
+<FormField
   control={form.control}
   name="completed"
   render={({ field }) => (
     <FormItem className='flex justify-start items-center space-x-3'>
-      
       <FormControl>
-        <Checkbox
-          {...field} checked={field.value} onCheckedChange={field.onChange}
-           value={field.value ? "true" : "false"}
+        {/* Radix Checkbox requires `onCheckedChange` for handling checked state */}
+        {/* <Checkbox
+          checked={field.value || false} // Ensure the checkbox is checked based on `field.value`
+          onCheckedChange={(checked) => field.onChange(checked === true)} // Ensure the value is boolean
+        /> */}
+
+        <Input
+          type="checkbox"
+          checked={field.value || false} // Utilisez field.value pour contrôler la case à cocher
+          onChange={(e) => field.onChange(e.target.checked)} // Mettez à jour la valeur avec e.target.checked
+          className="checkbox" // Ajoutez des classes CSS si nécessaire
         />
+
       </FormControl>
       <FormLabel>Completed</FormLabel>
     </FormItem>
@@ -145,22 +156,28 @@ const defaultValues: Partial<ProductFormValues> = {
 />
 
 
-       
-      <DialogFooter>
-          <Button type="submit">
-            {loading ? <Spinner /> : 'Editing'}
-            </Button>
-        </DialogFooter>
+<DialogFooter>
+<Button type="submit" disabled={loading}>
+{loading ? (
+  <>
+   <Spinner />
+    <span className='mx-2'>Edit</span>
+  </>
+  ) : (
+     "Edit"
+   )}
 
-      </form>
-    </Form>
-         
-        </div>
+</Button>
+  </DialogFooter>
 
-        
-      </DialogContent>
-    </Dialog>
-    </div>
+</form>
+</Form>
+</div>
+
+</DialogContent>
+</Dialog>
+</div>
+ 
   )
 }
 

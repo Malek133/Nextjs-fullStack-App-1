@@ -13,24 +13,17 @@ const ProductActions = ({product}:{product:IProduct}) => {
   return (
     <main className='flex space-x-4'>
       
-               <EditProductForm product={product} />
+               <EditProductForm key={product.id} product={product} />
 
               <Button className="bg-red-600 text-white 
               hover:text-black hover:bg-slate-50" 
-            //   onClick={async ()=>{
-            //       setLoading(true)
-            //       await deleteProductActions({id:product.id});
-            //       setLoading(false)
-            //     }
-            //     }
             onClick={async () => {
-                if (product.id) { // Assurez-vous que l'ID existe
-                  setLoading(true);
-                  await deleteProductActions({ id: product.id });
+               if(product.id){
+                setLoading(true);
+                  await deleteProductActions({ id: product?.id });
                   setLoading(false);
-                } else {
-                  console.error("Product ID is null or undefined.");
-                }
+               }
+                  
               }}
                >
                 {loading ? <Spinner /> :<Trash2 size={16} />}

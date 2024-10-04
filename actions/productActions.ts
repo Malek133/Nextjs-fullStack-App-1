@@ -51,7 +51,7 @@ export const updateProductActions = async (
     {title,body,completed,id}:IProduct) =>{
     await prisma.product.update({
         where:{
-            id: id as string,
+            id,
         },
         data:{
             title,
