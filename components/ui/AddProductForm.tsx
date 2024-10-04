@@ -29,7 +29,7 @@ import Spinner from "./Spinner";
 
 
 
-const AddProductForm = () => {
+const AddProductForm = ({userId}:{userId:string | null}) => {
 
   const [loading,setLoading]= useState(false);
   const [open,setOpen]= useState(false)
@@ -52,7 +52,7 @@ const defaultValues: Partial<ProductFormValues> = {
     const onSubmit = async ({title,body,completed}:ProductFormValues) =>{
                setLoading(true)
         await createProductActions(
-            {title,body,completed})
+            {title,body,completed,userId})
                 setLoading(false)
                 setOpen(false)
     }

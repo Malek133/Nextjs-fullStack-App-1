@@ -7,8 +7,11 @@ import { revalidatePath } from 'next/cache';
 
 const prisma = new PrismaClient();
 
-export const getProductActions = async () => {
+export const getProductActions = async ({userId}:{userId:string | null}) => {
     return await prisma.product.findMany({
+        where:{
+          user_id:userId as string
+        },
         orderBy:{
             createdAd:"desc"
         }
@@ -17,17 +20,17 @@ export const getProductActions = async () => {
 
 export const createProductActions = async (
 { title, body, completed,
-    // price
+    userId
  }: { title: string; body?: string; 
     completed: boolean;
-    // price?:number
+    userId:string | null
  }) => {
     await prisma.product.create({
         data: {
             title,
             body,
-            // price,
             completed,
+            user_id:userId as string
         }
     });
     // Revalidate after the create operation
