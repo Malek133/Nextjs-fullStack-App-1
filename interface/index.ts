@@ -3,7 +3,7 @@ export interface IProduct {
     title: string;
     body: string | null;
     // image: string | null;
-    // price: number | null;
+     price?: number | null;
     completed: boolean;
     createdAd?: Date;
 }

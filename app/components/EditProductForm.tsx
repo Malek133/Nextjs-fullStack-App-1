@@ -36,6 +36,7 @@ const EditProductForm = ({product}:{product:IProduct}) => {
 const defaultValues: Partial<ProductFormValues> = {
     title:product.title,
     body:product.body as string,
+    price:product.price,
     completed:product.completed
   }
 
@@ -54,6 +55,7 @@ const defaultValues: Partial<ProductFormValues> = {
             id: product.id, // Assurez-vous que product.id est bien une chaîne
             title: data.title,
             body: data.body as string,
+            price:data.price,
             completed: data.completed,
         });
     
@@ -129,6 +131,24 @@ render={({ field }) => (
   </FormItem>
 )}
 />
+
+     <FormField
+                  control={form.control}
+                  name="price"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Price</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          {...field}
+                          onChange={(e) => field.onChange(parseFloat(e.target.value))}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
 <FormField
   control={form.control}

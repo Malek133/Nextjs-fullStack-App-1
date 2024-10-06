@@ -11,18 +11,21 @@ import {
     TableRow,
   } from "@/components/ui/table"
 import { IProduct } from "@/interface";
-// import { Eye } from 'lucide-react';
-import ProductActions from "./ProductActions";
+
+
 
   interface TableProductProps {
     products: IProduct[];
   }
   
   
-    const TableProduct: React.FC<TableProductProps> = ({ products }) => {
-
+    const TableAllProduct: React.FC<TableProductProps> = (
+        { products}
+    ) => {
+      
      
     return (
+      <main>
       <Table>
         <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader>
@@ -31,7 +34,7 @@ import ProductActions from "./ProductActions";
             <TableHead>Title</TableHead>
              <TableHead>Price</TableHead>
             <TableHead>Completed</TableHead>
-            <TableHead className="">Actions</TableHead>
+            
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -41,10 +44,7 @@ import ProductActions from "./ProductActions";
               <TableCell>{product.title}</TableCell>
                <TableCell>{product.price}</TableCell> 
               <TableCell>{product.completed ? "true" : "false"}</TableCell>
-              <TableCell className=" flex-col justify-center items-center space-x-4">
-              <ProductActions product={product} />
-              {/* <Button  ><Eye size={16} /></Button> */}
-                </TableCell>
+              
             </TableRow>
           ))}
         </TableBody>
@@ -55,8 +55,11 @@ import ProductActions from "./ProductActions";
           </TableRow>
         </TableFooter>
       </Table>
+      </main>
     )
   }
 
-  export default TableProduct
+  export default TableAllProduct
+
+
   

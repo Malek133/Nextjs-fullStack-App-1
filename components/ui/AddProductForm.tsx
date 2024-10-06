@@ -38,7 +38,7 @@ const AddProductForm = ({userId}:{userId:string | null}) => {
 const defaultValues: Partial<ProductFormValues> = {
     title:"",
     body: "",
-      //  price:0,
+    price:0,
     completed:false
   }
   
@@ -49,10 +49,12 @@ const defaultValues: Partial<ProductFormValues> = {
         mode: "onChange",
       })
 
-    const onSubmit = async ({title,body,completed}:ProductFormValues) =>{
+    const onSubmit = async ({title,body,price,completed}:ProductFormValues) =>{
                setLoading(true)
         await createProductActions(
-            {title,body,completed,userId})
+            {title,body,completed,
+              price
+              ,userId})
                 setLoading(false)
                 form.reset();  // Réinitialiser le formulaire
                 setOpen(false)
@@ -114,6 +116,24 @@ const defaultValues: Partial<ProductFormValues> = {
             </FormItem>
           )}
         />
+
+<FormField
+                  control={form.control}
+                  name="price"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Price</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          {...field}
+                          onChange={(e) => field.onChange(parseFloat(e.target.value))}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
 <FormField
   control={form.control}
