@@ -12,7 +12,7 @@ model Product {
   title    String
   body     String?
   image    String?
-  price    Float?
+  price    Float
   completed   Boolean  @default(false)
   user_id String
   createdAd DateTime  @default(now())

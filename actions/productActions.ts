@@ -22,38 +22,21 @@ export const getAllProductActions = async () => {
   return await prisma.product.findMany({});
 }
 
-// export const createProductActions = async (
-// { title, body, completed,price,
-//     userId
-//  }: { title: string; body?: string; 
-//     completed: boolean;
-//     price:number;
-//     userId:string | null
-//  }) => {
-//     await prisma.product.create({
-//         data: {
-//             title,
-//             body,
-//             completed,
-//             price,
-//             user_id:userId as string
-//         }
-//     });
-//     // Revalidate after the create operation
-//     revalidatePath('/')
-// }
+
 
 export const createProductActions = async ({
     title,
     body,
     completed,
     price,
+    image,
     userId,
   }: {
     title: string;
     body?: string;
     completed: boolean;
-    price: number | null;
+    price: number;
+    image?:string;
     userId: string | null;
   }) => {
     try {
@@ -63,6 +46,7 @@ export const createProductActions = async ({
           body,
           completed,
           price,
+          image,
           user_id: userId as string,
         },
       });
@@ -86,7 +70,7 @@ export const deleteProductActions = async ({ id }: { id: string }) => {
 }
 
 export const updateProductActions = async (
-    {title,body,completed,id,price}:IProduct) =>{
+    {title,body,completed,id,price,image}:IProduct) =>{
     await prisma.product.update({
         where:{
             id,
@@ -95,6 +79,7 @@ export const updateProductActions = async (
             title,
             body,
             price,
+            image,
             completed
         }
     })

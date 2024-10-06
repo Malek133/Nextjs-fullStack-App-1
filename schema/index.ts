@@ -17,7 +17,8 @@ export const productFormSchema = z.object({
     }).optional(),
 
     completed:z.boolean(),
-    price: z.number().min(0, "Price must be a positive number").optional(),
+    price: z.number().min(0, "Price must be a positive number"),
+    image:z.string().optional()
 
   })
   

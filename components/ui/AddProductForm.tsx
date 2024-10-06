@@ -39,6 +39,7 @@ const defaultValues: Partial<ProductFormValues> = {
     title:"",
     body: "",
     price:0,
+    image:"",
     completed:false
   }
   
@@ -49,11 +50,11 @@ const defaultValues: Partial<ProductFormValues> = {
         mode: "onChange",
       })
 
-    const onSubmit = async ({title,body,price,completed}:ProductFormValues) =>{
+    const onSubmit = async ({title,body,price,completed,image}:ProductFormValues) =>{
                setLoading(true)
         await createProductActions(
             {title,body,completed,
-              price
+              price,image
               ,userId})
                 setLoading(false)
                 form.reset();  // Réinitialiser le formulaire
@@ -111,6 +112,24 @@ const defaultValues: Partial<ProductFormValues> = {
               <FormDescription>
                 You can <span>@mention</span> other users and organizations to
                 link to them.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+<FormField
+          control={form.control}
+          name="image"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input placeholder="shadcn" {...field} />
+              </FormControl>
+              <FormDescription>
+                This is your public display name. It can be your real name or a
+                pseudonym. You can only change this once every 30 days.
               </FormDescription>
               <FormMessage />
             </FormItem>

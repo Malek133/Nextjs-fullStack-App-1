@@ -6,9 +6,11 @@ const pageAllProducts = async() => {
 
   const products = await getAllProductActions();
   return (
+    
     <div className='mx-20 my-6'>
       <TableAllProduct products={products} />
     </div>
+    
   )
 }
 

@@ -10,7 +10,9 @@ import {
     TableHeader,
     TableRow,
   } from "@/components/ui/table"
+   import { Eye } from 'lucide-react';
 import { IProduct } from "@/interface";
+import { Button } from "@/components/ui/button";
 
 
 
@@ -30,20 +32,24 @@ import { IProduct } from "@/interface";
         <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader>
           <TableRow> 
-            <TableHead >ID</TableHead>
+          
             <TableHead>Title</TableHead>
              <TableHead>Price</TableHead>
             <TableHead>Completed</TableHead>
+            <TableHead >Details</TableHead>
             
           </TableRow>
         </TableHeader>
         <TableBody>
           {products && products.map((product) => (
             <TableRow key={product.id}>
-              <TableCell className="font-medium">{product.id}</TableCell>
+              
               <TableCell>{product.title}</TableCell>
                <TableCell>{product.price}</TableCell> 
               <TableCell>{product.completed ? "true" : "false"}</TableCell>
+              <TableCell>
+                <Button ><Eye size={24} /></Button> 
+                </TableCell>
               
             </TableRow>
           ))}

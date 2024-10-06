@@ -37,6 +37,7 @@ const defaultValues: Partial<ProductFormValues> = {
     title:product.title,
     body:product.body as string,
     price:product.price,
+    image:product.image as string,
     completed:product.completed
   }
 
@@ -56,6 +57,7 @@ const defaultValues: Partial<ProductFormValues> = {
             title: data.title,
             body: data.body as string,
             price:data.price,
+            image:data.image as string,
             completed: data.completed,
         });
     
@@ -151,26 +153,40 @@ render={({ field }) => (
                 />
 
 <FormField
+          control={form.control}
+          name="image"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Image</FormLabel>
+              <FormControl>
+                <Input placeholder="shadcn" {...field} />
+              </FormControl>
+              <FormDescription>
+                This is your public display name. It can be your real name or a
+                pseudonym. You can only change this once every 30 days.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+<FormField
   control={form.control}
   name="completed"
   render={({ field }) => (
-    <FormItem className='flex justify-start items-center space-x-3'>
+    <FormItem className='flex justify-start items-center space-x-2'>
+       <FormLabel>Completed</FormLabel>
       <FormControl>
-        {/* Radix Checkbox requires `onCheckedChange` for handling checked state */}
-        {/* <Checkbox
-          checked={field.value || false} // Ensure the checkbox is checked based on `field.value`
-          onCheckedChange={(checked) => field.onChange(checked === true)} // Ensure the value is boolean
-        /> */}
 
         <Input
           type="checkbox"
           checked={field.value || false} // Utilisez field.value pour contrôler la case à cocher
           onChange={(e) => field.onChange(e.target.checked)} // Mettez à jour la valeur avec e.target.checked
-          className="checkbox" // Ajoutez des classes CSS si nécessaire
+          className="" // Ajoutez des classes CSS si nécessaire
         />
 
       </FormControl>
-      <FormLabel>Completed</FormLabel>
+     
     </FormItem>
   )}
 />

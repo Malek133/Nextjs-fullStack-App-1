@@ -10,8 +10,8 @@ import {
     TableHeader,
     TableRow,
   } from "@/components/ui/table"
+  import Image from 'next/image'
 import { IProduct } from "@/interface";
-// import { Eye } from 'lucide-react';
 import ProductActions from "./ProductActions";
 
   interface TableProductProps {
@@ -32,6 +32,7 @@ import ProductActions from "./ProductActions";
              <TableHead>Price</TableHead>
             <TableHead>Completed</TableHead>
             <TableHead className="">Actions</TableHead>
+            <TableHead>Images</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -43,7 +44,12 @@ import ProductActions from "./ProductActions";
               <TableCell>{product.completed ? "true" : "false"}</TableCell>
               <TableCell className=" flex-col justify-center items-center space-x-4">
               <ProductActions product={product} />
-              {/* <Button  ><Eye size={16} /></Button> */}
+            
+              
+                </TableCell>
+                <TableCell>
+                <Image  width={50} height={50}
+                  src={product.image ?? ''} alt='' />
                 </TableCell>
             </TableRow>
           ))}

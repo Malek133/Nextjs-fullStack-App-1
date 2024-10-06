@@ -10,7 +10,7 @@ import Link from "next/link";
 const  NavBar = () => {
   return (
     <div 
-     className='flex justify-end items-center gap-3 p-3 mx-4'
+     className='flex justify-end items-center gap-3 p-3 mx-24'
     >
       <Link href="/">
       <p>
