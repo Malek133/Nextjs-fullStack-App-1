@@ -4,6 +4,7 @@
 import AddProductForm from "@/components/ui/AddProductForm";
 import TableProduct from "./components/TableProduct";
 import { auth } from "@clerk/nextjs/server";
+import { LayoutPanelLeft,Sheet } from 'lucide-react';
 
 
 
@@ -20,6 +21,15 @@ export default async function  Home() {
     > 
        <AddProductForm userId={userId} /> 
     </div>
+
+    <ul className="flex justify-start items-center space-x-3 mx-20 my-6">
+      <li>
+        <Sheet />
+      </li>
+      <li>
+        <LayoutPanelLeft />
+      </li>
+    </ul>
 
      <div className="mx-20">
      <TableProduct products={products} />

@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    images: {
-        domains: ['i.pinimg.com'],  // Ajoutez ici les domaines autorisés pour les images
-      },
+  images: {
+    domains: ['utfs.io', 'i.pinimg.com'],
+  },
 };
 
 export default nextConfig;

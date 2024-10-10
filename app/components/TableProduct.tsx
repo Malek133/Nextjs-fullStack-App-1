@@ -47,10 +47,30 @@ import ProductActions from "./ProductActions";
             
               
                 </TableCell>
-                <TableCell>
-                <Image  width={50} height={50}
-                  src={product.image ?? ''} alt='' />
-                </TableCell>
+                {/* <TableCell>
+              {product.image ? (
+                <Image
+                  width={50}
+                  height={50}
+                  src={product.image}
+                  alt={product.title}
+                />
+              ) : (
+                <span>No image</span>
+              )}
+            </TableCell> */}
+            <TableCell>
+  {typeof product.image === 'string' && product.image ? (
+    <Image
+      width={50}
+      height={50}
+      src={product.image}
+      alt={product.title}
+    />
+  ) : (
+    <span>No image</span>
+  )}
+</TableCell>
             </TableRow>
           ))}
         </TableBody>

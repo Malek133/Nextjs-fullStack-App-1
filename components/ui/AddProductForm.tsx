@@ -1,196 +1,211 @@
+
 'use client'
 
-import { Button } from "@/components/ui/button";
-import { FolderPlus } from 'lucide-react';
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { FolderPlus } from 'lucide-react'
 import {
-  Dialog,DialogContent,DialogDescription,
-  DialogFooter,DialogHeader,DialogTitle,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-  } from "@/components/ui/form"
-  import { Textarea } from "@/components/ui/textarea";
-
-  import { zodResolver } from "@hookform/resolvers/zod"
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Textarea } from "@/components/ui/textarea"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { productFormSchema, ProductFormValues } from "@/schema";
-import { createProductActions } from "@/actions/productActions";
-import { Checkbox } from "./checkbox";
-import { useState } from "react";
-import Spinner from "./Spinner";
+import { productFormSchema, ProductFormValues } from "@/schema"
+import { createProductActions } from "@/actions/productActions"
+import { Checkbox } from "./checkbox"
+import Spinner from "./Spinner"
+import UploadButtonComponent from "@/app/components/UploadButton"
 
 
+export default function AddProductForm({ userId }: { userId: string | null }) {
+  const [loading, setLoading] = useState(false)
+  const [open, setOpen] = useState(false)
+  const [imageUrl, setImageUrl] = useState("")
 
-const AddProductForm = ({userId}:{userId:string | null}) => {
-
-  const [loading,setLoading]= useState(false);
-  const [open,setOpen]= useState(false)
-
-        // This can come from your database or API.
-const defaultValues: Partial<ProductFormValues> = {
-    title:"",
+  const defaultValues: Partial<ProductFormValues> = {
+    title: "",
     body: "",
-    price:0,
-    image:"",
-    completed:false
+    price: 0,
+    image: "",
+    completed: false
   }
-  
 
-    const form = useForm<ProductFormValues>({
-        resolver: zodResolver(productFormSchema),
-        defaultValues,
-        mode: "onChange",
-      })
+  const form = useForm<ProductFormValues>({
+    resolver: zodResolver(productFormSchema),
+    defaultValues,
+    mode: "onChange",
+  })
 
-    const onSubmit = async ({title,body,price,completed,image}:ProductFormValues) =>{
-               setLoading(true)
-        await createProductActions(
-            {title,body,completed,
-              price,image
-              ,userId})
-                setLoading(false)
-                form.reset();  // Réinitialiser le formulaire
-                setOpen(false)
-    }
+  const onSubmit = async ({title, body, price, completed}: ProductFormValues) => {
+    setLoading(true)
+    await createProductActions({
+      title,
+      body,
+      completed,
+      price,
+      image: imageUrl,
+      userId
+    })
+    setLoading(false)
+    form.reset()
+    setImageUrl("")
+    setOpen(false)
+  }
+
+  const handleUploadComplete = (url: string) => {
+    setImageUrl(url)
+    form.setValue("image", url)
+  }
 
   return (
-    <div>
-      <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-         <Button><FolderPlus className="mx-2" /> New Todo</Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Add new Todo</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile here. Click save when your done.
-          </DialogDescription>
-        </DialogHeader>
-        <div className=" py-4">
-           
-        <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
-              <FormControl>
-                <Input placeholder="shadcn" {...field} />
-              </FormControl>
-              <FormDescription>
-                This is your public display name. It can be your real name or a
-                pseudonym. You can only change this once every 30 days.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+   <div>
+    <Dialog open={open} onOpenChange={setOpen}>
+  {/* Déclencheur du dialogue, ici le bouton pour ajouter une nouvelle tâche ("New Todo") */}
+  <DialogTrigger asChild>
+    <Button>
+      <FolderPlus className="mx-2" /> New Todo
+    </Button>
+  </DialogTrigger>
 
-        <FormField
-          control={form.control}
-          name="body"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Bio</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Tell us a little bit about yourself"
-                  className="resize-none"
-                  {...field}
-                />
-              </FormControl>
-              <FormDescription>
-                You can <span>@mention</span> other users and organizations to
-                link to them.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+  {/* Contenu de la boîte de dialogue */}
+  <DialogContent className="sm:max-w-[425px]">
+    {/* En-tête du dialogue avec le titre et la description */}
+    <DialogHeader>
+      <DialogTitle>Add new Todo</DialogTitle>
+      <DialogDescription>
+        Make changes to your profile here. Click save when you're done.
+      </DialogDescription>
+    </DialogHeader>
 
-<FormField
-          control={form.control}
-          name="image"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
-              <FormControl>
-                <Input placeholder="shadcn" {...field} />
-              </FormControl>
-              <FormDescription>
-                This is your public display name. It can be your real name or a
-                pseudonym. You can only change this once every 30 days.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+    <div className="py-4">
+      {/* Formulaire utilisant un hook pour la gestion de formulaire */}
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          
+          {/* Champ pour le titre */}
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Title</FormLabel>
+                <FormControl>
+                  <Input placeholder="Title of your todo" {...field} />
+                </FormControl>
+                <FormDescription>
+                  Enter the title for your new todo item.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-<FormField
+          {/* Champ pour la description */}
+          <FormField
+            control={form.control}
+            name="body"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="Tell us more about your task"
+                    className="resize-none"
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>
+                  You can provide more details about your task here.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Champ pour télécharger une image */}
+            
+          <FormField
                   control={form.control}
-                  name="price"
+                  name="image"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Price</FormLabel>
+                      <FormLabel>Image</FormLabel>
                       <FormControl>
-                        <Input
-                          type="number"
-                          {...field}
-                          onChange={(e) => field.onChange(parseFloat(e.target.value))}
-                        />
+                        <div>
+                          <UploadButtonComponent onUploadComplete={handleUploadComplete} />
+                          {imageUrl && <img src={imageUrl} alt="Product" className="mt-2 max-w-full h-auto" />}
+                        </div>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
 
-<FormField
-  control={form.control}
-  name="completed"
-  render={({ field }) => (
-    <FormItem>
-      <FormLabel>Completed</FormLabel>
-      <FormControl>
-     
-      <Checkbox
-          checked={field.value} // Utilisez `checked` au lieu de `value`
-          onCheckedChange={(checked) => field.onChange(checked)} // Mettez à jour `onChange` correctement
-        /> 
+          {/* Champ pour le prix */}
+          <FormField
+            control={form.control}
+            name="price"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Price</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    {...field}
+                    onChange={(e) => field.onChange(parseFloat(e.target.value))}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-           
-      </FormControl>
-      <FormMessage />
-    </FormItem>
-  )}
-/>
+          {/* Checkbox pour marquer la tâche comme complétée */}
+          <FormField
+            control={form.control}
+            name="completed"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Completed</FormLabel>
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={(checked) => field.onChange(checked)}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-       
-      <DialogFooter>
-          <Button type="submit">
-            {loading ? <Spinner /> : 'Save'}
+          {/* Pied du dialogue avec le bouton pour soumettre le formulaire */}
+          <DialogFooter>
+            <Button type="submit">
+              {loading ? <Spinner /> : 'Save'}
             </Button>
-        </DialogFooter>
-
-      </form>
-    </Form>
-         
-        </div>
-
-        
-      </DialogContent>
-    </Dialog>
+          </DialogFooter>
+        </form>
+      </Form>
     </div>
+  </DialogContent>
+</Dialog>
+
+   </div>
   )
 }
-
-export default AddProductForm

@@ -48,7 +48,9 @@ import { Button } from "@/components/ui/button";
                <TableCell>{product.price}</TableCell> 
               <TableCell>{product.completed ? "true" : "false"}</TableCell>
               <TableCell>
+                
                 <Button ><Eye size={24} /></Button> 
+                
                 </TableCell>
               
             </TableRow>

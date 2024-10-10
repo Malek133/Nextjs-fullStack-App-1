@@ -18,7 +18,9 @@ export const productFormSchema = z.object({
 
     completed:z.boolean(),
     price: z.number().min(0, "Price must be a positive number"),
-    image:z.string().optional()
+    image: z.string().url({
+      message: "Please upload an image.",
+    }),
 
   })
   

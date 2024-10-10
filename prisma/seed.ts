@@ -1,8 +1,8 @@
-import { PrismaClient } from '@prisma/client'
-import {faker} from '@faker-js/faker'
-const prisma = new PrismaClient()
+// import { PrismaClient } from '@prisma/client'
+// import {faker} from '@faker-js/faker'
+// const prisma = new PrismaClient()
 
-async function main() {
+// async function main() {
   // await prisma.user.createMany({
   //   data: Array.from({ length: 25 }, () => ({
   //     email: faker.internet.email(),
@@ -10,20 +10,21 @@ async function main() {
   //   })),
   // });
 
-  await prisma.product.createMany({
-    data: Array.from({ length: 25 }, () => ({
-      title:faker.word.adjective(5),
-      body:faker.word.adjective(100),
-    })),
-  });
-}
+//   await prisma.product.createMany({
+//     data: Array.from({ length: 25 }, () => ({
+//       title:faker.word.adjective(5),
+//       body:faker.word.adjective(100),
+//     })),
+//   });
+// }
 
 
-main()
-  .catch(async (e) => {
-    console.error(e)
-    process.exit(1)
-  })
-  .finally(async () => {
-    await prisma.$disconnect()
-  })
+// main()
+//   .catch(async (e) => {
+//     console.error(e)
+//     process.exit(1)
+//   })
+//   .finally(async () => {
+//     await prisma.$disconnect()
+//   }
+// )

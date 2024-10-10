@@ -7,16 +7,15 @@ import { revalidatePath } from 'next/cache';
 
 const prisma = new PrismaClient();
 
-export const getProductActions = async ({userId}:{userId:string | null}) => {
-    return await prisma.product.findMany({
-        where:{
-          user_id:userId as string
-        },
-        orderBy:{
-            createdAd:"desc"
-        }
-    });
+export const getProductActions = async ({ userId }: { userId: string | null }) => {
+  return await prisma.product.findMany({
+      where: userId ? { user_id: userId } : {}, // Utilisez 'user_id' au lieu de 'userId'
+      orderBy: {
+          createdAd: "desc" // Utilisez 'createdAt' si c'est la bonne colonne pour la date de création
+      }
+  });
 }
+
 
 export const getAllProductActions = async () => {
   return await prisma.product.findMany({});
@@ -69,19 +68,46 @@ export const deleteProductActions = async ({ id }: { id: string }) => {
     revalidatePath('/');
 }
 
-export const updateProductActions = async (
-    {title,body,completed,id,price,image}:IProduct) =>{
+// export const updateProductActions = async (
+//     {title,body,completed,id,price,image}:IProduct) =>{
+//     await prisma.product.update({
+//         where:{
+//             id,
+//         },
+//         data:{
+//             title,
+//             body,
+//             price,
+//             image,
+//             completed
+//         }
+//     })
+//     revalidatePath('/');
+// }
+
+export const updateProductActions = async ({
+  id,
+  title,
+  body,
+  completed,
+  price,
+  image,
+}: IProduct) => {
+  try {
     await prisma.product.update({
-        where:{
-            id,
-        },
-        data:{
-            title,
-            body,
-            price,
-            image,
-            completed
-        }
-    })
+      where: { id },
+      data: {
+        title,
+        body,
+        completed,
+        price,
+        image,
+      },
+    });
+    // Revalidate the path after updating the product
     revalidatePath('/');
-}
+  } catch (error) {
+    console.error("Error updating product: ", error);
+    throw error;
+  }
+};
