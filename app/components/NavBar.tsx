@@ -22,6 +22,12 @@ const  NavBar = () => {
         Products
       </p>
       </Link>
+
+      <Link href="/Gproducts">
+      <p>
+        Grid
+      </p>
+      </Link>
       
         <ModeToggle />
         <SignedOut>

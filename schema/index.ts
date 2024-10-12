@@ -12,7 +12,7 @@ export const productFormSchema = z.object({
     
     body: z
     .string()
-    .max(100, {
+    .max(1000, {
       message: "Username must not be longer than 100 characters.",
     }).optional(),
 

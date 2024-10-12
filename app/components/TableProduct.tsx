@@ -10,7 +10,7 @@ import {
     TableHeader,
     TableRow,
   } from "@/components/ui/table"
-  import Image from 'next/image'
+  
 import { IProduct } from "@/interface";
 import ProductActions from "./ProductActions";
 
@@ -32,7 +32,7 @@ import ProductActions from "./ProductActions";
              <TableHead>Price</TableHead>
             <TableHead>Completed</TableHead>
             <TableHead className="">Actions</TableHead>
-            <TableHead>Images</TableHead>
+             
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -43,34 +43,11 @@ import ProductActions from "./ProductActions";
                <TableCell>{product.price}</TableCell> 
               <TableCell>{product.completed ? "true" : "false"}</TableCell>
               <TableCell className=" flex-col justify-center items-center space-x-4">
-              <ProductActions product={product} />
-            
+               <ProductActions product={product} /> 
+              </TableCell>
               
-                </TableCell>
-                {/* <TableCell>
-              {product.image ? (
-                <Image
-                  width={50}
-                  height={50}
-                  src={product.image}
-                  alt={product.title}
-                />
-              ) : (
-                <span>No image</span>
-              )}
-            </TableCell> */}
-            <TableCell>
-  {typeof product.image === 'string' && product.image ? (
-    <Image
-      width={50}
-      height={50}
-      src={product.image}
-      alt={product.title}
-    />
-  ) : (
-    <span>No image</span>
-  )}
-</TableCell>
+              
+          
             </TableRow>
           ))}
         </TableBody>

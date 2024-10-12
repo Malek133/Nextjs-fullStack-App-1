@@ -7,7 +7,6 @@ import { FolderPlus } from 'lucide-react'
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -88,9 +87,7 @@ export default function AddProductForm({ userId }: { userId: string | null }) {
     {/* En-tête du dialogue avec le titre et la description */}
     <DialogHeader>
       <DialogTitle>Add new Todo</DialogTitle>
-      <DialogDescription>
-        Make changes to your profile here. Click save when you're done.
-      </DialogDescription>
+      
     </DialogHeader>
 
     <div className="py-4">
@@ -143,13 +140,15 @@ export default function AddProductForm({ userId }: { userId: string | null }) {
           <FormField
                   control={form.control}
                   name="image"
-                  render={({ field }) => (
+                  render={() => (
                     <FormItem>
                       <FormLabel>Image</FormLabel>
                       <FormControl>
                         <div>
                           <UploadButtonComponent onUploadComplete={handleUploadComplete} />
-                          {imageUrl && <img src={imageUrl} alt="Product" className="mt-2 max-w-full h-auto" />}
+                          {/* {imageUrl && 
+                          <img src={imageUrl} alt="Product" 
+                          className="mt-2 max-w-full h-auto" />} */}
                         </div>
                       </FormControl>
                       <FormMessage />
