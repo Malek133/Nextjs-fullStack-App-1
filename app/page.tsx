@@ -1,41 +1,55 @@
 
- import { getProductActions } from "@/actions/productActions";
+//  import { getProductActions } from "@/actions/productActions";
 
-import AddProductForm from "@/components/ui/AddProductForm";
-import TableProduct from "./components/TableProduct";
-import { auth } from "@clerk/nextjs/server";
-import { LayoutPanelLeft,Sheet } from 'lucide-react';
+// import AddProductForm from "@/components/ui/AddProductForm";
+// import TableProduct from "./components/TableProduct";
+// import { auth } from "@clerk/nextjs/server";
+// import { LayoutPanelLeft,Sheet } from 'lucide-react';
 
 
 
-export default async function  Home() {
+// export default async function  Home() {
 
-  const {userId} = auth()
- const products = await getProductActions({userId});
+//   const {userId} = auth()
+//  const products = await getProductActions({userId});
 
-  return (
-   <main>
+//   return (
+//    <main>
     
-     <div 
-     className="flex justify-between items-center p-8 pb-4 gap-6 sm:p-20 font-[family-name:var(--font-geist-sans)]"
-    > 
-       <AddProductForm userId={userId} /> 
-    </div>
+//      <div 
+//      className="flex justify-between items-center p-8 pb-4 gap-6 sm:p-20 font-[family-name:var(--font-geist-sans)]"
+//     > 
+//        <AddProductForm userId={userId} /> 
+//     </div>
 
-    <ul className="flex justify-start items-center space-x-3 mx-20 my-6">
-      <li>
-        <Sheet />
-      </li>
-      <li>
-        <LayoutPanelLeft />
-      </li>
-    </ul>
+//     <ul className="flex justify-start items-center space-x-3 mx-20 my-6">
+//       <li>
+//         <Sheet />
+//       </li>
+//       <li>
+//         <LayoutPanelLeft />
+//       </li>
+//     </ul>
 
-     <div className="mx-20">
-     <TableProduct products={products} />
-       </div>
+//      <div className="mx-20">
+//      <TableProduct products={products} />
+//        </div>
 
-    </main>
+//     </main>
    
-  );
+//   );
+// }
+
+
+import React from 'react'
+
+const page = () => {
+  return (
+    <div className="flex items-center justify-center h-screen">
+  <h1 className='text-4xl'>Hello Alphazero</h1>
+</div>
+
+  )
 }
+
+export default page

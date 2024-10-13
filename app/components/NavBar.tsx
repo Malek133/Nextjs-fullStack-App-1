@@ -13,6 +13,11 @@ const  NavBar = () => {
     <div 
      className='flex justify-end items-center gap-3 p-3 mx-24'
     >
+        <Link href="/Dashboard">
+      <p>
+        Dashboard
+      </p>
+      </Link>
       <Link href="/">
       <p>
         Home
