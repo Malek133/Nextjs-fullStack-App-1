@@ -7,6 +7,7 @@ import {
   UserButton
 } from '@clerk/nextjs'
 import Link from "next/link";
+import { SheetDemo } from "./Open";
 const  NavBar = () => {
   return (
     <div 
@@ -28,6 +29,7 @@ const  NavBar = () => {
         Grid
       </p>
       </Link>
+      <SheetDemo />
       
         <ModeToggle />
         <SignedOut>

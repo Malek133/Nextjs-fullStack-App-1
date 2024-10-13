@@ -26,7 +26,7 @@ import { IProduct } from "@/interface";
       
      
     return (
-      <main>
+      <main className="w-full max-w-3xl mx-auto">
       <Table>
         <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader>
