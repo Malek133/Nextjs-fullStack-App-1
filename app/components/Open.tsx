@@ -7,20 +7,21 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import Cart from "./Cart"
+
 import { ShoppingCart } from 'lucide-react';
 import { useSelector } from 'react-redux'
 import { selectCart } from "../store/cartSlice";
+import Cart from "./Cart";
 
 export function SheetDemo() {
 
-    const {items} = useSelector(selectCart) 
+    const cart = useSelector(selectCart) 
 
   return (
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="outline">
-            <ShoppingCart /> <span>({items.length})</span>
+            <ShoppingCart /> <span>({cart?.items?.length || 0})</span>
             </Button>
       </SheetTrigger>
       <SheetContent>

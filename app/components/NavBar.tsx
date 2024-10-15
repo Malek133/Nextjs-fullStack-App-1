@@ -10,10 +10,11 @@ import Link from "next/link";
 import { SheetDemo } from "./Open";
 const  NavBar = () => {
   return (
-    <div 
+    <div
      className='flex justify-end items-center gap-3 p-3 mx-24'
     >
-        <Link href="/Dashboard">
+      
+         <Link href="/Dashboard">
       <p>
         Dashboard
       </p>
@@ -23,17 +24,14 @@ const  NavBar = () => {
         Home
       </p>
       </Link>
-      <Link href="/Products">
-      <p>
-        Products
-      </p>
-      </Link>
 
       <Link href="/Gproducts">
       <p>
         Grid
       </p>
       </Link>
+      
+       
       <SheetDemo />
       
         <ModeToggle />

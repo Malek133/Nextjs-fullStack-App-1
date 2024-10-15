@@ -3,26 +3,55 @@
 "use client";
 
 import { useSelector, useDispatch } from 'react-redux'
-import { RootState, AppDispatch } from '../store/store'
-import { removeFromCart } from '../store/cartSlice'
-import { Button } from "@/components/ui/button";
+import { selectCart, removeFromCart } from '../store/cartSlice'
+import { Button } from "@/components/ui/button"
+import Image from "next/image"
+import { RootState } from '../store/store'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import Image from "next/image";
 import { Trash2,ShoppingBag } from "lucide-react";
 import Link from 'next/link';
 
 export default function Cart() {
-  const cartItems = useSelector((state: RootState) => state.cart.items)
-  const dispatch = useDispatch<AppDispatch>()
+  const cart = useSelector((state: RootState) => selectCart(state))
+  const dispatch = useDispatch()
 
-  const handleRemoveFromCart = (id: number) => {
-    dispatch(removeFromCart(id))
+  const handleRemoveFromCart = (id:string | null) => {
+    // dispatch(removeFromCart(id))
+    if (id !== null) {
+      dispatch(removeFromCart(id))
+    } else {
+      console.error('Cannot remove item with null id')
+    }
   }
 
-  const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0)
+  const cartItems = cart?.items || []
 
-  return (
+  // return (
+  //   <div>
+  //     <h2>Panier</h2>
+  //     {cartItems.length === 0 ? (
+  //       <p>Votre panier est vide</p>
+  //     ) : (
+  //       <ul>
+  //         {cartItems.map((item) => (
+  //           <li key={item.id}>
+  //             {item.image && (
+  //               <Image src={item.image} alt={item.title} width={50} height={50} />
+  //             )}
+  //             <span>{item.title}</span>
+  //             <span>Quantité: {item.quantity}</span>
+  //             <span>Prix: ${item.price * item.quantity}</span>
+  //             <Button onClick={() => handleRemoveFromCart(item.id)}>Supprimer</Button>
+  //           </li>
+  //         ))}
+  //       </ul>
+  //     )}
+  //     <p>Total: ${cartItems.reduce((total, item) => total + item.price * item.quantity, 0)}</p>
+  //   </div>
+  // )
+
+    return (
     <Card className="w-full max-w-2xl mx-auto my-6">
       <CardHeader>
         <CardTitle className="text-2xl font-bold">Panier</CardTitle>
@@ -42,6 +71,7 @@ export default function Cart() {
                         src={item.image}
                         alt={item.title}
                         className="object-cover rounded-md"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       />
                     ) : (
                       <div className="h-full w-full bg-gray-200 rounded-md flex items-center justify-center">
@@ -76,7 +106,8 @@ export default function Cart() {
         <>
           <CardFooter className="flex justify-between items-center">
             <p className="text-lg font-semibold">Total</p>
-            <p className="text-2xl font-bold">${totalPrice.toFixed(2)}</p>
+            <p>Total: ${cartItems.reduce((total, item) => total + item.price * item.quantity, 0)}</p>
+            {/* <p className="text-2xl font-bold">${totalPrice.toFixed(2)}</p> */}
           </CardFooter>
           <CardFooter className="pt-4">
             <Link href="/checkout" className="w-full">

@@ -8,7 +8,7 @@ import {
   Dialog,
   DialogContent,
   DialogFooter,
-  DialogHeader,
+  // DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
@@ -85,10 +85,10 @@ export default function AddProductForm({ userId }: { userId: string | null }) {
   {/* Contenu de la boîte de dialogue */}
   <DialogContent className="sm:max-w-[425px]">
     {/* En-tête du dialogue avec le titre et la description */}
-    <DialogHeader>
+    {/* <DialogHeader> */}
       <DialogTitle>Add new Todo</DialogTitle>
       
-    </DialogHeader>
+    {/* </DialogHeader> */}
 
     <div className="py-4">
       {/* Formulaire utilisant un hook pour la gestion de formulaire */}
